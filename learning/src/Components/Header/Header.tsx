@@ -1,11 +1,11 @@
 import './Header.scss';
-import BurgerIcon from './icons/BurgerIcon/burgerIcon';
+import BurgerMenu from './BurgerMenu/BurgerMenu';
 
 const Header = () => {
     return (
         <header className='header'>
           <div className="header__burger-menu">
-            <BurgerIcon />
+            <BurgerMenu />
           </div>
 
           <nav className='header__links-container'>
@@ -16,7 +16,6 @@ const Header = () => {
           <div className="header__name">
             Moviezzz
           </div>
-
         </header>
     );
 }
