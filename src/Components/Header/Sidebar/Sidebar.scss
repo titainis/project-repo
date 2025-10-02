@@ -2,12 +2,13 @@
 
 .sidebar {
   position: fixed;
-  top: 60px;
+  top: 100px;
   left: 0;
   height: 100vh; 
   width: 250px;    
   background-color: $light-grey;
-  transform: translateX(-100%); 
+  transform: translateX(-100%);
+  transition: 0.3s ease-in; 
   z-index: 1000;
   padding: 2rem 1rem;
 

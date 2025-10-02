@@ -1,9 +1,13 @@
 @use '../../styles/colors/colors.scss';
 
 .header{
-    background-color: colors.$light-grey;
+    background-color: transparent;
+    border-bottom: 5px solid;       
+    border-color: colors.$light-grey;
     height: 60px;
     display: flex;
+    z-index: 5;
+    transition: 0.3s ease-in;
 
     &__burger-menu {
         display: flex;
@@ -12,24 +16,30 @@
         padding-left: 20px;
     }
 
-    &__name {
-        font-size: 22px;
-        padding: 20px;
+    &__search-bar{
         display: flex;
         align-items: center;
-        font-weight: 800;
+        justify-content: center;
+    }
+
+    &__logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &__links-container {
         display: flex;
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
+        padding-left: 50px;
         align-items: center;
         gap: 30px;
 
         a {
             text-decoration: none;
-            color: #000000;
+            font-size: 18px;
+            color: #464343;
             display: flex;
             font-weight: 600;
         }

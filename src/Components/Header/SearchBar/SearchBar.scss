@@ -1,0 +1,26 @@
+.search {
+    position: relative;
+    display: inline-block;
+    border: none;
+
+    &__input{
+        padding-left: 10px;
+        border: none;
+        background-color: rgb(199, 209, 206);
+        border-radius: 10px;
+    }
+
+    &__btn {
+        position: absolute;
+        border: none;
+        background-color: transparent;
+        right: 2px;
+        cursor: pointer;
+        height: 26px;
+    }
+
+    &__icon {
+        width: 26px;
+        height: 26px;
+    }
+}
