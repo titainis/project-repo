@@ -1,3 +1,5 @@
+@use '../../../styles/colors/colors' as *; 
+
 .search {
     position: relative;
     display: inline-block;
@@ -6,8 +8,10 @@
     &__input{
         padding-left: 10px;
         border: none;
-        background-color: rgb(199, 209, 206);
+        background-color: transparent;
         border-radius: 10px;
+        border: 2px solid $light-grey;
+        color: $light-grey;
     }
 
     &__btn {

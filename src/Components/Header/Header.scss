@@ -1,9 +1,6 @@
 @use '../../styles/colors/colors.scss';
 
-.header{
-    background-color: transparent;
-    border-bottom: 5px solid;       
-    border-color: colors.$light-grey;
+.header {    
     height: 60px;
     display: flex;
     z-index: 5;
@@ -20,12 +17,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-right: 50px;
     }
 
     &__logo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        padding-right: 20px;
     }
 
     &__links-container {
@@ -39,9 +35,15 @@
         a {
             text-decoration: none;
             font-size: 18px;
-            color: #464343;
+            color: colors.$light-grey;
             display: flex;
             font-weight: 600;
+            transition: ease-in 0.3s;
+
+            &:hover {
+                padding-bottom: 4px;
+                color: colors.$blue-grey;
+            }
         }
     }
 }

@@ -21,9 +21,7 @@ const BurgerIcon = () => {
            {open ? <X className='burger__icon'/> : <Menu className='burger__icon' />}
           </Button>
 
-          {open && (
             <Sidebar open={open} />
-          )}
         </div>
     )
 }
