@@ -1,5 +1,7 @@
 import './Header.scss';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
+import Logo from './Logo/Logo';
+import SearchBar from './SearchBar/SearchBar';
 
 const Header = () => {
     return (
@@ -10,11 +12,16 @@ const Header = () => {
 
           <nav className='header__links-container'>
             <a href="#">Movies</a>
-            <a href="#">Logo</a>
+            <a href="#">Favorites</a>
+            <a href="#">Discover</a>
           </nav> 
 
-          <div className="header__name">
-            Moviezzz
+          <div className='header__search-bar'>
+            <SearchBar />
+          </div>
+
+          <div className="header__logo">
+            <Logo />
           </div>
         </header>
     );

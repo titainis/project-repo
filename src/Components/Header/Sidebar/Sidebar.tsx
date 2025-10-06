@@ -11,8 +11,9 @@ const Sidebar: React.FC<SidebarProps> = ({
     <div className={`sidebar ${open ? "sidebar__open" : ""}`}>
       <nav className='sidebar__links'>
         <a href="#">Movies</a>
-        <a href="#">Contacts</a>
+        <a href="#">Favorites</a>
         <a href="#">About</a>
+        <a href="#">Contacts</a>
       </nav>
     </div>
     );

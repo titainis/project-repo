@@ -1,0 +1,30 @@
+@use '../../../styles/colors/colors' as *; 
+
+.search {
+    position: relative;
+    display: inline-block;
+    border: none;
+
+    &__input{
+        padding-left: 10px;
+        border: none;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 2px solid $light-grey;
+        color: $light-grey;
+    }
+
+    &__btn {
+        position: absolute;
+        border: none;
+        background-color: transparent;
+        right: 2px;
+        cursor: pointer;
+        height: 26px;
+    }
+
+    &__icon {
+        width: 26px;
+        height: 26px;
+    }
+}

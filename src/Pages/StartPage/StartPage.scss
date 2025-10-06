@@ -1,0 +1,32 @@
+@use '../../styles/colors/colors';
+
+.start-page {
+  min-height: calc(100vh - 60px);
+
+  &__explore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: colors.$white;
+    
+    h1 {
+        font-size: 50px;
+        margin-bottom: 1rem;
+    }
+
+    Button {
+        border: none;
+        width: 200px;
+        height: 40px;
+        border-radius: 10px;
+        background-color: colors.$light-grey;
+        transition: 0.5s ease-in-out;
+        font-weight: 500;
+
+        &:hover {
+          font-size: 12px;
+          background-color: colors.$blue-grey;
+        }
+    }
+  }
+}
