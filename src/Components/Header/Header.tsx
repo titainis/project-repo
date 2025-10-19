@@ -2,6 +2,7 @@ import './Header.scss';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import Logo from './Logo/Logo';
 import SearchBar from './SearchBar/SearchBar';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
@@ -11,7 +12,8 @@ const Header = () => {
           </div>
 
           <nav className='header__links-container'>
-            <a href="#">Movies</a>
+           <Link to='/movies'>Movies</Link>
+            <a href="#">TV Series</a>
             <a href="#">Favorites</a>
             <a href="#">Discover</a>
           </nav> 
