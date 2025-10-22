@@ -2,25 +2,24 @@ import { useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import MovieCard from "../../Components/MovieCard/MovieCard";
 
+
 interface Movie {
   id: number;
   title: string;
-  original_title: string;
-  overview: string;
   poster_path: string;
-  release_date: string;
 }
 
 
 const MoviesPage = () => {
+  const apiKey = import.meta.env.VITE_API_KEY;
+  console.log(apiKey);
 
   const [movies, setMovies] = useState<Movie[]>([]);
 
     const fetchMovies = async () => {
-    const response = await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key=678612f2f1eccf5a1412d75b52478535');
+    const response = await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`);
     const data = await response.json();
     setMovies(data.results);
-    console.log(data.results);
   };
 
   useEffect(() => {
