@@ -1,0 +1,52 @@
+.movie-slider-container {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+
+    &__arrow {
+     position: absolute;
+     opacity: 0.5;
+
+     &.right {
+        right: 0;
+     }
+
+     &.left {
+      left: 0;
+     }
+    }
+}
+
+.movie-slider {
+        display: flex;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        
+        &__card {
+          flex: 0 0 auto;
+          width: 200px;
+          height: 300px;
+          transition: ease 0.3s;
+          overflow-y: visible;
+
+          &:hover {
+            transform: scale(0.95);
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;   
+            border-radius: 10px;
+
+            &:hover {
+              opacity: 0.7;
+            }
+          
+          }
+        }
+    }

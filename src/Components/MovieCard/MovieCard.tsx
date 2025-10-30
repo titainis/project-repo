@@ -1,9 +1,5 @@
 import './MovieCard.scss';
-
-interface Movie {
-  poster_path: string;
-  title: string;
-}
+import { Movie } from '../../types/movies';
 
 interface MovieCardProps {
   movie: Movie;
@@ -19,7 +15,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             />
             </div>
             <div className='movie-card__title'>
-                <></>
                 {movie.title.length >= 20 ? movie.title.slice(0, 20) + "..." : movie.title}
             </div>
           </a>

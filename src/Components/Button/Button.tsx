@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { PropsWithChildren, ReactNode } from "react";
 
 interface ButtonProps {
     className?: string,
@@ -6,6 +6,7 @@ interface ButtonProps {
     value?: string;
     disabled?: boolean;
     children: ReactNode;
+    props?: PropsWithChildren;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,6 +15,7 @@ const Button: React.FC<ButtonProps> = ({
     value,
     disabled,
     children,
+    props,
 }) => {
     return (
       <button
@@ -21,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
         onClick={onClick}
         value={value}
         disabled={disabled}
+        {...props}
       >
         {children}
       </button>
