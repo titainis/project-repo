@@ -11,7 +11,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           <a href="" className='movie-card'>
             <div className="movie-card__cover">
             <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            alt={movie.title}  
+            alt={movie.title}
             />
             </div>
             <div className='movie-card__title'>

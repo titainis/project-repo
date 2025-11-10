@@ -8,15 +8,17 @@ const StartPage = () => {
       <>
       <Header />
         <div className="start-page d-flex justify-content-center align-items-center">
+          <img src="src\Pages\StartPage\img\landing-bg-ww.jpg" alt="FILMS" />
           <div className='start-page__explore'>
-            <h1 className='pt-5'>Find trending movies for yourself</h1>
+            <h1>Find Movies And TV Series To Watch</h1>
             <p>Get ready for the best experience</p>
-              <div>
+              <div className='start-page__buttons'>
                 <Link to='/movies'>
-                  <Button
-                  >
-                    EXPLORE
-                  </Button>
+                  <Button>MOVIES</Button>
+                </Link>
+
+                <Link to='/tv-series'>
+                  <Button>TV SERIES</Button>
                 </Link>
             </div>
           </div>

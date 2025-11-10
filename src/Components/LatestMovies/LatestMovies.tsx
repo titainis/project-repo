@@ -1,6 +1,7 @@
 import MovieCard from "../MovieCard/MovieCard";
 import { Movie } from "../../types/movies";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 const LatestMovies = () => {
       const apiKey = import.meta.env.VITE_API_KEY;
@@ -21,7 +22,11 @@ const LatestMovies = () => {
 
     return (
         <>
-          {latestMovies.map((movie) => <MovieCard key={movie.id} movie={movie}/>)}
+          {latestMovies.map((movie) => 
+            <Link to={`/movies/${movie.id}`}>
+              <MovieCard key={movie.id} movie={movie}/>
+            </Link>
+          )}
         </>
     );
 };

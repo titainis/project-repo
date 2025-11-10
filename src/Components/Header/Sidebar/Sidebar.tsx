@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Sidebar.scss';
 
 interface SidebarProps {
@@ -11,11 +11,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     return (
     <div className={`sidebar ${open ? "sidebar__open" : ""}`}>
       <nav className='sidebar__links'>
-        <Link to='/movies'>Movies</Link>
-        <a href="#">TV Series</a>
-        <a href="#">Favorites</a>
-        <a href="#">About</a>
-        <a href="#">Contacts</a>
+        <NavLink to='/movies'>Movies</NavLink>
+        <NavLink to='/tv-series'>TV Series</NavLink>
+        <NavLink to='/favorites'>Favorites</NavLink>
+        <NavLink to='/account'>Account</NavLink>
       </nav>
     </div>
     );
