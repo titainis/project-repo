@@ -1,31 +1,47 @@
 @use '../../styles/colors/colors';
 
 .start-page {
-  min-height: calc(100vh - 60px);
+  height: calc(100vh - 60px);
+
+  img {
+    position: absolute;
+    height: calc(100vh - 60px);
+    width: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
 
   &__explore {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: colors.$white;
+    background-color: rgb(0, 0, 0, 0.85);
+    border-radius: 70px;
+    padding: 30px 60px 30px 60px;
     
     h1 {
         font-size: 50px;
-        margin-bottom: 1rem;
+        margin-bottom: 10px;
     }
 
     Button {
         border: none;
         width: 200px;
         height: 40px;
+        font-size: 18px;
         border-radius: 10px;
         background-color: colors.$light-grey;
-        transition: 0.5s ease-in-out;
+        transition: 0.3s ease-in-out;
         font-weight: 500;
 
         &:hover {
           font-size: 12px;
-          background-color: colors.$blue-grey;
+          background-color: #49c8e7;
         }
     }
   }

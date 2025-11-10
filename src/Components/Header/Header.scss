@@ -5,12 +5,14 @@
     display: flex;
     z-index: 5;
     transition: 0.3s ease-in;
+    background-color: black;
 
     &__burger-menu {
         display: flex;
         align-items: center;
         border: none;
         padding-left: 20px;
+        display: none;
     }
 
     &__search-bar{
@@ -31,8 +33,9 @@
         padding-left: 50px;
         align-items: center;
         gap: 30px;
+    }
 
-        a {
+    &__links {
             text-decoration: none;
             font-size: 18px;
             color: colors.$light-grey;
@@ -44,6 +47,10 @@
                 padding-bottom: 4px;
                 color: colors.$blue-grey;
             }
+
+            &.active {
+                color: #49c8e7;
+                padding-bottom: 0;
+            }
         }
-    }
 }
