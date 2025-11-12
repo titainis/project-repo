@@ -59,19 +59,15 @@ const MovieDetails = () => {
     if (isFavorite) {
       const updated = favorites.filter(fav => fav.id !== moviesDetails.id);
       localStorage.setItem("favorites", JSON.stringify(updated));
-
       setIsFavorite(false);
       
     } else {
         favorites.push(moviesDetails);
         localStorage.setItem("favorites", JSON.stringify(favorites));
         setIsFavorite(true);
-    
       }
 
     setNotification(isFavorite ? "Removed From Favorites" : "Added To Favorites");
-
-    
 
     setTimeout(() => { 
       setNotification(null);
@@ -97,7 +93,7 @@ const MovieDetails = () => {
                     
                     <div className="movie-details__card">
                         <h2 className="movie-details__card-title">{moviesDetails.title}</h2>
-                        <p className="">{moviesDetails.release_date.length < 4 ? 
+                        <p>{moviesDetails.release_date.length < 4 ? 
                         (moviesDetails.release_date) : 
                         (moviesDetails.release_date.slice(0, 4))}
                         </p>
@@ -126,7 +122,7 @@ const MovieDetails = () => {
             <section ref={descriptionRef} className="movie-description pt-5">
                 <div className="movie-description__overview d-flex flex-column justify-content-center align-items-center text-align-center">
                     <h2 className="pb-2">Description</h2>
-                    <p>{moviesDetails?.overview}</p>
+                    <p className="text-center w-75">{moviesDetails?.overview}</p>
                     <h3>Genres</h3>
                     <p className="pb-2">{moviesDetails?.genres?.map(g => g.name).join(", ")}</p>
 

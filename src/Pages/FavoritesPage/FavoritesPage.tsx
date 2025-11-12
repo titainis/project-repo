@@ -3,6 +3,7 @@ import { Movie } from "../../types/movies";
 import Button from "../../Components/Button/Button";
 import Header from "../../Components/Header/Header";
 import { Link } from "react-router-dom";
+import './FavoritesPage.scss'
 
 const FavoritesPage = () => {
     const [favorites, setFavorites] = useState<Movie[]>([])
@@ -21,8 +22,8 @@ const FavoritesPage = () => {
      return (
     <>
         <Header />
-    <div className="container favorites-page mt-4">
-      <h2 className="text-center mb-5">Your Favorite Movies</h2>
+    <div className="container favorites-page">
+      <h2 className="text-center pt-3 mb-5">Your Favorite Movies</h2>
 
       {favorites.length === 0 ? (
         <p className="text-center fs-5">No favorites yet</p>) :
@@ -38,16 +39,23 @@ const FavoritesPage = () => {
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">{movie.title}</h5>
                     <p className="card-text">{movie.release_date?.slice(0, 4)}</p>
+
+                    <div className="card-buttons d-flex flex-column mt-auto"> 
+                      <Link to={`/movies/${movie.id}`}>
+                        <Button className="card-buttons-details w-100"
+                        >
+                          View Details
+                        </Button>
+                    </Link>
+
                     <Button
-                    className="mt-auto"
+                    className="card-buttons-remove w-100"
                     onClick={() => removeFavorite(movie.id)}
                     >
                     Remove
                     </Button>
-
-                    <Link to={`/movies/${movie.id}`}>
-                        <Button>Movie Details</Button>
-                    </Link>
+                    </div>
+                   
                     
                 </div>
                 </div>

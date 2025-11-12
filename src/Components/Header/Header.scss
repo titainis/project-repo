@@ -6,6 +6,17 @@
     z-index: 5;
     transition: 0.3s ease-in;
     background-color: black;
+    position: fixed;
+    width: 100%;
+    padding: 0 20px;
+
+      &.hide {
+        transform: translateY(-100%);
+      }
+
+    &.show {
+        transform: translateY(0);
+      }
 
     &__burger-menu {
         display: flex;
@@ -45,7 +56,7 @@
 
             &:hover {
                 padding-bottom: 4px;
-                color: colors.$blue-grey;
+                color: #49c8e7;
             }
 
             &.active {
