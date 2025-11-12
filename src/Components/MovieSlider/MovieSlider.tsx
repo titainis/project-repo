@@ -65,7 +65,6 @@ const MovieSlider = () => {
 
     return (
         <div className="movie-slider-container d-flex position-relative align-items-center">
-            <Button className="movie-slider-container__arrow left"  /* onClick={() => scroll("left")} */ >ll</Button>
             <div className="movie-slider d-flex gap-3" ref={sliderRef}>
               {[...trendingMovies, ...trendingMovies].map((movie, index) => 
                 <Link to={`/movies/${movie.id}`} className='movie-slider__card d-flex flex-column align-items-center text-center'
@@ -78,7 +77,6 @@ const MovieSlider = () => {
                 </Link>
                 )}
             </div>
-            <Button className="movie-slider-container__arrow right" /* onClick={() => scroll("right")} */ >rr</Button>
         </div>
     );
 }

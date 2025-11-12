@@ -1,11 +1,11 @@
 @use '../../styles/colors/colors';
 
 .start-page {
-  height: calc(100vh - 60px);
+  height: 100vh;
 
   img {
     position: absolute;
-    height: calc(100vh - 60px);
+    height: 100vh;
     width: 100%;
   }
 

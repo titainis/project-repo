@@ -1,23 +1,16 @@
 .movie-slider-container {
-    overflow-x: hidden;
-    width: 100%;
-    position: relative;
-
-    &__arrow {
-     position: absolute;
-     opacity: 0.5;
-
-     &.right {
-        right: 0;
-     }
-
-     
-    }
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .movie-slider {
-  overflow-x: hidden;
+  overflow-x: scroll;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
         
   &__card {
     flex: 0 0 200px;
