@@ -1,5 +1,6 @@
 import Button from "../../Button/Button";
 import './SearchBar.scss';
+import SearchIcon from '../../../assets/SearchIcon/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg';
 
 const SearchBar = () => {
   return (
@@ -8,7 +9,7 @@ const SearchBar = () => {
         <input className='search__input' name="Search" type="text" placeholder="Search" />
         <Button className="search__btn">
           <img className="search__icon"
-            src="src/Components/Header/SearchBar/icon/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" 
+            src={SearchIcon}
             alt="Search" 
           />
         </Button>

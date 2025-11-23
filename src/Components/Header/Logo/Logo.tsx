@@ -1,10 +1,11 @@
 import './Logo.scss'
+import logo from '../../../assets/LogoImage/s8WrQs01.svg';
 
 const Logo = () => {
   return (
     <div className="logo">
       <img 
-        src="src\Components\Header\Logo\image\s8WrQs01.svg" 
+        src={logo}
         alt="Logo" 
         className="logo__img"
       />
