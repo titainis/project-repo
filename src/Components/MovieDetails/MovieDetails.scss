@@ -35,7 +35,12 @@
         pointer-events: none;
         border: none;
         opacity: 0.9;
-        }
+      }
+    }
+
+    Button {
+        border: none;
+        cursor: pointer;
     }
 
     &__card {
@@ -129,7 +134,6 @@
   }
   }
 
-
 .pop-up {
   position: fixed;
   bottom: 20px;
@@ -161,17 +165,14 @@
 }
 
 
-
 @media (min-width: 1550px) {
 
     .movie-details{
     
-
     &__card {
         top: 10%;
         height: auto;
         padding: 2rem;
-
 
     img {
       width: 300px;

@@ -1,6 +1,10 @@
 .card {
     border: none;
     box-shadow: rgba(28, 126, 239, 0.3) 0px 2px 6px 4px;
+    animation: load linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+
     &:hover {
         background-color: white;
     }
@@ -53,4 +57,15 @@
 
 .favorites-page {
     padding-top: 60px;
+}
+
+@keyframes load{
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
