@@ -1,9 +1,9 @@
-import { useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { Movie, Video } from "../../types/movies";
 import { useEffect, useState, useRef } from "react";
 import './MovieDetails.scss';
 import Button from "../Button/Button";
-
+import BackArrow from '../../assets/white-arrow.png';
 
 const MovieDetails = () => {
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -16,6 +16,7 @@ const MovieDetails = () => {
     const [movieVideo, setMovieVideo] = useState<Video[]>([]);
     const [isFavorite, setIsFavorite] = useState(false);
     const [notification, setNotification] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const descriptionRef = useRef<HTMLElement | null>(null);
 
@@ -60,7 +61,6 @@ const MovieDetails = () => {
       const updated = favorites.filter(fav => fav.id !== moviesDetails.id);
       localStorage.setItem("favorites", JSON.stringify(updated));
       setIsFavorite(false);
-      
     } else {
         favorites.push(moviesDetails);
         localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -69,15 +69,15 @@ const MovieDetails = () => {
 
     setNotification(isFavorite ? "Removed From Favorites" : "Added To Favorites");
 
-    setTimeout(() => { 
+    setTimeout(() => {
       setNotification(null);
-    }, 3000);
+    }, 5000);
     };
 
     return (
         <div className="movie-details-container pb-5">
             {moviesDetails ? (
-                <div className="movie-details">
+                <div className="movie-details position-relative">
                     {trailer && (
                         <div className="movie-details__video">
                             <iframe
@@ -90,16 +90,17 @@ const MovieDetails = () => {
                         </div>
                     )}
 
-                    
+                    <Button className="back-btn position-fixed top-0 m-3 bg-transparent border-none" onClick={() => navigate(-1)}>
+                        <img src={BackArrow} alt="BackArrow" width={20} height={20} className=""/>
+                      </Button>
+              
                     <div className="movie-details__card">
                         <h2 className="movie-details__card-title">{moviesDetails.title}</h2>
-                        <p>{moviesDetails.release_date.length < 4 ? 
-                        (moviesDetails.release_date) : 
-                        (moviesDetails.release_date.slice(0, 4))}
+                        <p>{moviesDetails.release_date.slice(0, 4)}
                         </p>
                         <p>{moviesDetails.runtime > 0 ? 
                           (`${Math.floor(moviesDetails.runtime / 60)}h ${moviesDetails.runtime % 60}m`) : 
-                          (null)}
+                          ("Runtime unknown")}
                         </p>
                         <img src={`https://image.tmdb.org/t/p/w500/${moviesDetails.poster_path}`} alt={moviesDetails.title} />
                         <div className="movie-details__card-imdb pt-3"> 
@@ -135,9 +136,10 @@ const MovieDetails = () => {
             </section>
 
             {notification && (
-              <div className={`pop-up ${isFavorite === true ? 'add' : 'remove'}`}>
-                {notification}
-              </div>
+              <Link to='/favorites' className={`pop-up ${isFavorite === true ? 'add' : 'remove'} d-flex flex-column align-items-center justify-content-center text-decoration-none`}>
+                <p className="m-0">{notification}</p>
+                <p className="m-0">Go to Favorites</p>
+              </Link>
             )}
             
         </div>

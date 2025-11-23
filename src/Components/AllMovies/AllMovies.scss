@@ -3,3 +3,17 @@
     margin: 0;
     -webkit-appearance: none;
 }
+
+.form-select {
+    border: none;
+    transition: 0.3s ease-in;
+
+    &:hover {
+        background-color: #49c7e7b8;
+        color: white;
+    }
+}
+
+.filter-input {
+    width: 100px;
+}

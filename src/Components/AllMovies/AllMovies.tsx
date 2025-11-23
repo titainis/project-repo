@@ -54,11 +54,11 @@ export default function AllMovies() {
             }
             onBlur={(e) => {
                 const value = e.target.value;
-                if (value && (value.length !== 4 || parseInt(value) < 1900 || parseInt(value) > 2025)) {
+                if (value && (parseInt(value) < 1900 || parseInt(value) > 2025)) {
                 setYear('');
                 }
             }}
-            className="filter-input form-control w-auto"
+            className="filter-input form-control"
             min="1900"
             max="2025"
         />

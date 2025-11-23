@@ -26,11 +26,16 @@ const FavoritesPage = () => {
       <h2 className="text-center pt-3 mb-5">Your Favorite Movies</h2>
 
       {favorites.length === 0 ? (
-        <p className="text-center fs-5">No favorites yet</p>) :
+        <div className="text-center fs-5">
+          <p>No favorites yet</p>
+          <Link to='/movies' className="text-decoration-none text-white">
+            <Button className="rounded px-2">Find Movies To Favorite</Button>
+          </Link>
+        </div> ) :
           (<div className="row">
             {favorites.map((movie) => (
             <div key={movie.id} className="col-md-3 mb-4">
-                <div className="card favorites-page__card h-100">
+              <div className="card favorites-page__card h-100">
                 <img
                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                     className="card-img-top"
@@ -56,12 +61,11 @@ const FavoritesPage = () => {
                     </Button>
                     </div>
                    
-                    
                 </div>
-                </div>
+              </div>
             </div>
             ))}
-        </div>)
+          </div>)
     }
       
     </div>
