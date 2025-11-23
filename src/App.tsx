@@ -13,7 +13,6 @@ function App() {
         <Route path='/' element={<StartPage />}/>
         <Route path='/movies' element={<MoviesPage />}/>
         <Route path='/movies/:id' element={<MovieDetails />} />
-        <Route path='/movies/:id' element={<MovieDetails />} />
         <Route path='/favorites' element={<FavoritesPage />} />
         <Route path='/movies/all-movies' element={<AllMoviesPage />} />
       </Routes>
