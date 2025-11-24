@@ -2,14 +2,14 @@ import './StartPage.scss';
 import Header from '../../Components/Header/Header'
 import Button from '../../Components/Button/Button';
 import { Link } from 'react-router-dom';
-import BgImage from '../../assets/StartPageImage/landing-bg-ww.jpg'
+import Background from '../../assets/StartPageImage/landing-bg-ww.webp';
 
 const StartPage = () => {
     return (
       <>
       <Header />
         <div className="start-page d-flex justify-content-center align-items-center">
-          <img src={BgImage} alt="FILMS" />
+          <img src={Background} alt="FILMS" />
           <div className='start-page__explore'>
             <h1>Find Movies And TV Series To Watch</h1>
             <p>Get ready for the best experience</p>
