@@ -11,6 +11,10 @@ export interface MediaType {
   genres: {
     name: string
   }[];  
-  name: string,
+  name: string;
+  type: string;
+  site: string;
+  number_of_seasons: number;
+  number_of_episodes: number;
+  first_air_date: string;
 }
-

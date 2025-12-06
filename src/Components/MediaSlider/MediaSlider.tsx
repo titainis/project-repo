@@ -4,10 +4,10 @@ import useMeasure from "react-use-measure";
 import { Link } from "react-router-dom";
 import './MediaSlider.scss';
 import { MediaType } from "../../types/MediaType";
-import { MediaSliderProps } from "../../types/MediaSliderProps";
+import { MediaProps } from "../../types/MediaProps";
 
 
-const MediaSlider = ({ fetchUrl, mediaType }: MediaSliderProps) => {
+const MediaSlider = ({ fetchUrl, mediaType }: MediaProps) => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const STOP_DURATION = 10000000;
   const START_DURATION = 60;

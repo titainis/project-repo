@@ -1,21 +1,21 @@
 import { Link, useNavigate, useParams } from "react-router";
-import { Movie } from "../../types/movies";
-import { Video } from "../../types/Video";
 import { useEffect, useState, useRef } from "react";
-import './MovieDetails.scss';
+import './MediaDetails.scss';
 import Button from "../Button/Button";
 import BackArrow from '../../assets/white-arrow.png';
 import { formatRuntime } from "../../Utils/Runtime";
+import { MediaType } from "../../types/MediaType";
+import { MediaProps } from "../../types/MediaProps";
 
-const MovieDetails = () => {
+const MovieDetails = ({ fetchUrl, mediaType }: MediaProps) => {
     const apiKey = import.meta.env.VITE_API_KEY;
     const { id } = useParams();
 
-    const VIDEO_API = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}`;
-    const DETAILS_API = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
+    const VIDEO_API = `${fetchUrl}/${id}/videos?api_key=${apiKey}`;
+    const DETAILS_API = `${fetchUrl}/${id}?api_key=${apiKey}`;
 
-    const [moviesDetails, setMoviesDetails] = useState<Movie | null>(null);
-    const [movieVideo, setMovieVideo] = useState<Video[]>([]);
+    const [mediaDetails, setMediaDetails] = useState<MediaType | null>(null);
+    const [mediaVideo, setMediaVideo] = useState<MediaType[]>([]);
     const [isFavorite, setIsFavorite] = useState(false);
     const [notification, setNotification] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -25,13 +25,13 @@ const MovieDetails = () => {
     const fetchMoviesDetails = async () => {
         const response = await fetch(DETAILS_API);
         const data = await response.json();
-        setMoviesDetails(data);
+        setMediaDetails(data);
     };
 
     const fetchMoviesVideo = async () => {
         const response = await fetch(VIDEO_API);
         const data = await response.json();
-        setMovieVideo(data.results);
+        setMediaVideo(data.results);
     }
 
     useEffect(() => {
@@ -40,13 +40,13 @@ const MovieDetails = () => {
     }, [id]);
 
     useEffect(() => {
-    if (!moviesDetails) return;
+        if (!mediaDetails) return;
 
-    const favorites: Movie[] = JSON.parse(localStorage.getItem("favorites") || "[]");
-    setIsFavorite(favorites.some(fav => fav.id === moviesDetails.id));
-    }, [moviesDetails]);
+        const favorites: MediaType[] = JSON.parse(localStorage.getItem("favorites") || "[]");
+        setIsFavorite(favorites.some(fav => fav.id === mediaDetails.id));
+    }, [mediaDetails]);
 
-    const trailer = movieVideo.find(
+    const trailer = mediaVideo.find(
         (video) => video.type === "Trailer" && video.site === "YouTube"
     );
 
@@ -55,15 +55,15 @@ const MovieDetails = () => {
     };
 
     const toggleFavorite = () => {
-      if (!moviesDetails) return;
-      const favorites: Movie[] = JSON.parse(localStorage.getItem("favorites") || "[]");
+      if (!mediaDetails) return;
+      const favorites: MediaType[] = JSON.parse(localStorage.getItem("favorites") || "[]");
 
       if (isFavorite) {
-        const updated = favorites.filter(fav => fav.id !== moviesDetails.id);
+        const updated = favorites.filter(fav => fav.id !== mediaDetails.id);
         localStorage.setItem("favorites", JSON.stringify(updated));
         setIsFavorite(false);
       } else {
-          favorites.push(moviesDetails);
+          favorites.push(mediaDetails);
           localStorage.setItem("favorites", JSON.stringify(favorites));
           setIsFavorite(true);
         }
@@ -75,9 +75,29 @@ const MovieDetails = () => {
       }, 3000);
     };
 
+   
+    const getTitle = () => mediaDetails?.title || mediaDetails?.name || '';
+
+    const getReleaseYear = () => {
+      const date = mediaDetails?.release_date || mediaDetails?.first_air_date;
+      return date ? date.slice(0, 4) : '';
+    };
+
+    const getRuntime = () => {
+      if (mediaType === 'movie') {
+        return formatRuntime(mediaDetails?.runtime || 0);
+      } else {
+        const seasons = mediaDetails?.number_of_seasons || 0;
+        const episodes = mediaDetails?.number_of_episodes || 0;
+        return `${seasons} Season${seasons !== 1 ? 's' : ''} 
+        • 
+        ${episodes} Episode${episodes !== 1 ? 's' : ''}`;
+      }
+    };
+
     return (
         <div className="movie-details-container pb-5">
-            {moviesDetails ? (
+            {mediaDetails ? (
                 <div className="movie-details position-relative">
                     {trailer && (
                         <div className="movie-details__video">
@@ -93,21 +113,18 @@ const MovieDetails = () => {
 
                     <Button className="back-btn position-fixed top-0 m-3 bg-transparent border-none" onClick={() => navigate(-1)}>
                         <img src={BackArrow} alt="BackArrow" width={20} height={20} className=""/>
-                      </Button>
+                    </Button>
               
                     <div className="movie-details__card">
-                        <h2 className="movie-details__card-title">{moviesDetails.title}</h2>
-                        <p>{moviesDetails.release_date.slice(0, 4)}
-                        </p>
-                        <p>
-                          {formatRuntime(moviesDetails.runtime)}
-                        </p>
-                        <img src={`https://image.tmdb.org/t/p/w500/${moviesDetails.poster_path}`} alt={moviesDetails.title} />
+                        <h2 className="movie-details__card-title">{getTitle()}</h2>
+                        <p>{getReleaseYear()}</p>
+                        <p>{getRuntime()}</p>
+                        <img src={`https://image.tmdb.org/t/p/w500/${mediaDetails.poster_path}`} alt={getTitle()} />
                         <div className="movie-details__card-imdb pt-3"> 
-                            <span >IMDB:</span> {moviesDetails.vote_average < 1 ? ( 
+                            <span>IMDB:</span> {mediaDetails.vote_average < 1 ? ( 
                                 "Not rated yet"
                             ) : ( 
-                                <span>{moviesDetails.vote_average.toFixed(1)} </span>
+                                <span>{mediaDetails.vote_average.toFixed(1)}</span>
                            )}
                         </div>
 
@@ -123,9 +140,9 @@ const MovieDetails = () => {
             <section ref={descriptionRef} className="movie-description pt-5">
                 <div className="movie-description__overview d-flex flex-column justify-content-center align-items-center text-align-center">
                     <h2 className="pb-2">Description</h2>
-                    <p className="text-center w-75">{moviesDetails?.overview}</p>
+                    <p className="text-center w-75">{mediaDetails?.overview}</p>
                     <h3>Genres</h3>
-                    <p className="pb-2">{moviesDetails?.genres?.map(g => g.name).join(", ")}</p>
+                    <p className="pb-2">{mediaDetails?.genres?.map(g => g.name).join(", ")}</p>
 
                     <Button className={`movie-description__button ${isFavorite === true ? 'movie-description__button-unfavorite' : 'movie-description__button-favorite'}`} 
                       onClick={toggleFavorite}
