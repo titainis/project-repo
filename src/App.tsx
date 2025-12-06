@@ -19,7 +19,7 @@ function App() {
         <Route path='/movies/all-movies' element={<AllMoviesPage />} />
         <Route path='/tv-series' element={<SeriesPage />}/>
         <Route path='/tv-series/:id' 
-        element={<MediaDetails fetchUrl='https://api.themoviedb.org/3/tv' mediaType='tv' />} />
+        element={<MediaDetails fetchUrl='https://api.themoviedb.org/3/tv-series' mediaType='tv' />} />
       </Routes>
     </HashRouter>
   );
