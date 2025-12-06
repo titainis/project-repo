@@ -14,7 +14,7 @@ const MoviesPage = () => {
               <h1 className="movie-page__trending d-flex justify-content-center">Trending Movies</h1>
               <div className="movies-page__trending-movie-card d-flex flex-wrap pt-4 p-5 justify-content-center">
                   <MediaSlider fetchUrl="https://api.themoviedb.org/3/trending/movie/day"
-                    mediaType="tv"/>
+                    mediaType="movie"/>
               </div>
             </section>
 
