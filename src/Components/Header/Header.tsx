@@ -4,6 +4,7 @@ import BurgerMenu from './BurgerMenu/BurgerMenu';
 import Logo from './Logo/Logo';
 import SearchBar from './SearchBar/SearchBar';
 import { NavLink } from 'react-router-dom';
+import { Activity } from "lucide-react";
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(true);
@@ -38,7 +39,7 @@ const Header = () => {
       </nav> 
 
       <div className='header__search-bar'>
-        <SearchBar />
+          <SearchBar isVisible={showHeader}/>
       </div>
 
       <div className="header__logo">

@@ -1,9 +1,11 @@
 import { Link, useNavigate, useParams } from "react-router";
-import { Movie, Video } from "../../types/movies";
+import { Movie } from "../../types/movies";
+import { Video } from "../../types/Video";
 import { useEffect, useState, useRef } from "react";
 import './MovieDetails.scss';
 import Button from "../Button/Button";
 import BackArrow from '../../assets/white-arrow.png';
+import { formatRuntime } from "../../Utils/Runtime";
 
 const MovieDetails = () => {
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -48,30 +50,29 @@ const MovieDetails = () => {
         (video) => video.type === "Trailer" && video.site === "YouTube"
     );
 
-  const scrollToDescription = () => {
-    descriptionRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+    const scrollToDescription = () => {
+      descriptionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
 
-  const toggleFavorite = () => {
-    if (!moviesDetails) return;
+    const toggleFavorite = () => {
+      if (!moviesDetails) return;
+      const favorites: Movie[] = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-    const favorites: Movie[] = JSON.parse(localStorage.getItem("favorites") || "[]");
+      if (isFavorite) {
+        const updated = favorites.filter(fav => fav.id !== moviesDetails.id);
+        localStorage.setItem("favorites", JSON.stringify(updated));
+        setIsFavorite(false);
+      } else {
+          favorites.push(moviesDetails);
+          localStorage.setItem("favorites", JSON.stringify(favorites));
+          setIsFavorite(true);
+        }
 
-    if (isFavorite) {
-      const updated = favorites.filter(fav => fav.id !== moviesDetails.id);
-      localStorage.setItem("favorites", JSON.stringify(updated));
-      setIsFavorite(false);
-    } else {
-        favorites.push(moviesDetails);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        setIsFavorite(true);
-      }
+      setNotification(isFavorite ? "Removed From Favorites" : "Added To Favorites");
 
-    setNotification(isFavorite ? "Removed From Favorites" : "Added To Favorites");
-
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000);
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
     };
 
     return (
@@ -98,9 +99,8 @@ const MovieDetails = () => {
                         <h2 className="movie-details__card-title">{moviesDetails.title}</h2>
                         <p>{moviesDetails.release_date.slice(0, 4)}
                         </p>
-                        <p>{moviesDetails.runtime > 0 ? 
-                          (`${Math.floor(moviesDetails.runtime / 60)}h ${moviesDetails.runtime % 60}m`) : 
-                          ("Runtime unknown")}
+                        <p>
+                          {formatRuntime(moviesDetails.runtime)}
                         </p>
                         <img src={`https://image.tmdb.org/t/p/w500/${moviesDetails.poster_path}`} alt={moviesDetails.title} />
                         <div className="movie-details__card-imdb pt-3"> 
@@ -136,7 +136,8 @@ const MovieDetails = () => {
             </section>
 
             {notification && (
-              <Link to='/favorites' className={`pop-up ${isFavorite === true ? 'add' : 'remove'} d-flex flex-column align-items-center justify-content-center text-decoration-none`}>
+              <Link to='/favorites' className={`pop-up ${isFavorite === true ? 'add' : 'remove'} 
+                  d-flex flex-column align-items-center justify-content-center text-decoration-none`}>
                 <p className="m-0">{notification}</p>
                 <p className="m-0">Go to Favorites</p>
               </Link>
