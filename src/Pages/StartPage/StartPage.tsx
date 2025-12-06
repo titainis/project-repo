@@ -15,11 +15,11 @@ const StartPage = () => {
             <p>Get ready for the best experience</p>
               <div className='start-page__buttons'>
                 <Link to='/movies'>
-                  <Button>MOVIES</Button>
+                  <Button>Movies</Button>
                 </Link>
 
                 <Link to='/tv-series'>
-                  <Button>TV SERIES</Button>
+                  <Button>TV Series</Button>
                 </Link>
             </div>
           </div>

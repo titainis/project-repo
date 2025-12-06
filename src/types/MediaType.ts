@@ -1,4 +1,4 @@
-export interface Movie {
+export interface MediaType {
   id: number;
   title: string;
   poster_path: string;
@@ -10,5 +10,7 @@ export interface Movie {
   release_date: string;
   genres: {
     name: string
-  }[];
-  }
+  }[];  
+  name: string,
+}
+

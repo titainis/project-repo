@@ -1,9 +1,8 @@
 import Header from "../../Components/Header/Header";
 import LatestMovies from "../../Components/LatestMovies/LatestMovies";
-import MovieSlider from "../../Components/MovieSlider/MovieSlider";
 import Button from "../../Components/Button/Button";
 import { Link } from "react-router-dom";
-
+import MediaSlider from "../../Components/MediaSlider/MediaSlider";
 
 const MoviesPage = () => {
     return (
@@ -14,11 +13,12 @@ const MoviesPage = () => {
             <section className="movies-page__trending-movies pt-5">
               <h1 className="movie-page__trending d-flex justify-content-center">Trending Movies</h1>
               <div className="movies-page__trending-movie-card d-flex flex-wrap pt-4 p-5 justify-content-center">
-                  <MovieSlider />
+                  <MediaSlider fetchUrl="https://api.themoviedb.org/3/trending/movie/day"
+                    mediaType="tv"/>
               </div>
             </section>
 
-            <section className="movies-page__latest-movies pt-5">
+            <section className="movies-page__latest-movies pt-4">
               <h1 className="movies-page__latest d-flex justify-content-center">Latest Movies</h1>
                 <div className="movies-page__latest-movie-card d-flex flex-wrap p-5 gap-5 justify-content-center">
                   <LatestMovies />
