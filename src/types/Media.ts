@@ -1,4 +1,4 @@
-export interface MediaType {
+export interface Media {
   id: number;
   title: string;
   poster_path: string;
@@ -17,4 +17,5 @@ export interface MediaType {
   number_of_seasons: number;
   number_of_episodes: number;
   first_air_date: string;
+  media_type: 'tv' | 'movie'
 }

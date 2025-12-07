@@ -4,6 +4,7 @@ import SearchIcon from '../../../assets/SearchIcon/search_24dp_E3E3E3_FILL0_wght
 import { useEffect, useState } from "react";
 import { Search } from "../../../types/Search";
 import { useNavigate } from "react-router";
+import { titleCrop } from "../../../Utils/TitleCrop";
 
 const SearchBar = ({ isVisible}: {isVisible: boolean}) => {
   const apiKey = import.meta.env.VITE_API_KEY;
@@ -17,7 +18,9 @@ const SearchBar = ({ isVisible}: {isVisible: boolean}) => {
     const data = await response.json();
     setSearchResults(data.results || []);
   }
-  
+
+  const resultsByPopularity = [...searchResults].sort((a, b) => b.popularity - a.popularity);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (query)
@@ -31,10 +34,8 @@ const SearchBar = ({ isVisible}: {isVisible: boolean}) => {
     if(!isVisible) {
       setSearchResults([]);
     }
-  }, [isVisible])
+  }, [isVisible]);
 
-  const movieSearch = searchResults.filter(item => item.media_type === 'movie');
-  const seriesSearch = searchResults.filter(item => item.media_type === 'tv');
 
   return (
     <div className="search">
@@ -59,52 +60,29 @@ const SearchBar = ({ isVisible}: {isVisible: boolean}) => {
       {searchResults.length > 0 && (
         <div className="search-results">
           <div className="p-2">
-            <h2>Movies</h2>
             <ul className="search-results__list d-flex flex-column gap-3 p-0">
-              {movieSearch.map(movie => (
+              {resultsByPopularity.map(item => (
                 <li
                   className="search-results__list-item d-flex"
-                  key={movie.id}
-                  onClick={() => navigate(`/movies/${movie.id}`)}
+                  key={item.id}
+                  onClick={() => item.media_type === 'movie' ? navigate(`/movies/${item.id}`) : navigate(`/tv-series/${item.id}`)}
                 >
                   <img
                     className="search-results__list-item-img"
-                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                    alt={movie.title}
+                    src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+                    alt={item.title || item.name}
                   />
                   
                   <div className="search-results__list-item-info d-flex flex-column">
-                    <p className="search-results__list-item-title">{movie.title}</p>
-                    <p>{movie.release_date.slice(0, 4)}</p>
-                    <p className="search-results__list-item-type">
-                      {movie.media_type.charAt(0).toUpperCase() +
-                        movie.media_type.slice(1).toLowerCase()}
+                    <p className="search-results__list-item-title">{titleCrop((item.title || item.name), 20)}</p>
+                    <p>
+                      {item.media_type === "movie"
+                        ? item.release_date?.slice(0, 4) || "Upcoming"
+                        : item.first_air_date?.slice(0, 4) || "Upcoming"}
                     </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="p-2">
-            <h2>TV Series</h2>
-            <ul>
-              {seriesSearch.map((series) => (
-                <li
-                  className="search-results__list-item d-flex"
-                  key={series.id}
-                  // onClick={() => navigate(`/tv-series/${series.id}`)}
-                >
-                  <img
-                    className="search-results__list-item-img"
-                    src={`https://image.tmdb.org/t/p/original/${series.poster_path}`}
-                    alt={series.name}
-                  />
-                  
-                  <div className="search-results__list-item-info d-flex flex-column">
-                    <p className="search-results__list-item-title">{series.name}</p>
-                    <p>{series.first_air_date.slice(0, 4)}</p>
+
                     <p className="search-results__list-item-type">
-                      {series.media_type.toUpperCase()}
+                      {item.media_type === "movie" ? "Movie": "TV"}
                     </p>
                   </div>
                 </li>

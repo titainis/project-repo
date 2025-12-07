@@ -1,12 +1,12 @@
 import MovieCard from "../MovieCard/MovieCard";
-import { Movie } from "../../types/movies";
+import { Media} from "../../types/Media";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 const LatestMovies = () => {
       const apiKey = import.meta.env.VITE_API_KEY;
     
-      const [latestMovies, setLatestMovies] = useState<Movie[]>([]);
+      const [latestMovies, setLatestMovies] = useState<Media[]>([]);
     
       const fetchLatestMovies = async () => {
         const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`);
