@@ -3,7 +3,7 @@ import { motion, useMotionValue, animate } from "framer-motion";
 import useMeasure from "react-use-measure";
 import { Link } from "react-router-dom";
 import './MediaSlider.scss';
-import { MediaType } from "../../types/MediaType";
+import { Media } from "../../types/Media";
 import { MediaProps } from "../../types/MediaProps";
 
 
@@ -12,7 +12,7 @@ const MediaSlider = ({ fetchUrl, mediaType }: MediaProps) => {
   const STOP_DURATION = 10000000;
   const START_DURATION = 60;
 
-  const [mediaItems, setMediaItems] = useState<MediaType[]>([]);
+  const [mediaItems, setMediaItems] = useState<Media[]>([]);
   const [duration, setDuration] = useState(START_DURATION);
   const [finish, setFinish] = useState(false);
   const [rerender, setRerender] = useState(false);

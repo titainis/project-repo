@@ -3,19 +3,25 @@ import { useEffect, useState, useRef } from "react";
 import './MediaDetails.scss';
 import Button from "../Button/Button";
 import BackArrow from '../../assets/white-arrow.png';
-import { formatRuntime } from "../../Utils/Runtime";
-import { MediaType } from "../../types/MediaType";
+import { Media } from "../../types/Media";
 import { MediaProps } from "../../types/MediaProps";
+import { getReleaseYear, getRuntime, getTitle } from '../../Utils/mediaInformation';
 
-const MovieDetails = ({ fetchUrl, mediaType }: MediaProps) => {
+const MovieDetails = (
+  { 
+    fetchUrl, 
+    mediaType 
+  }: 
+  MediaProps
+) => {
     const apiKey = import.meta.env.VITE_API_KEY;
     const { id } = useParams();
 
     const VIDEO_API = `${fetchUrl}/${id}/videos?api_key=${apiKey}`;
     const DETAILS_API = `${fetchUrl}/${id}?api_key=${apiKey}`;
 
-    const [mediaDetails, setMediaDetails] = useState<MediaType | null>(null);
-    const [mediaVideo, setMediaVideo] = useState<MediaType[]>([]);
+    const [mediaDetails, setMediaDetails] = useState<Media| null>(null);
+    const [mediaVideo, setMediaVideo] = useState<Media[]>([]);
     const [isFavorite, setIsFavorite] = useState(false);
     const [notification, setNotification] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -41,8 +47,7 @@ const MovieDetails = ({ fetchUrl, mediaType }: MediaProps) => {
 
     useEffect(() => {
         if (!mediaDetails) return;
-
-        const favorites: MediaType[] = JSON.parse(localStorage.getItem("favorites") || "[]");
+        const favorites: Media[] = JSON.parse(localStorage.getItem("favorites") || "[]");
         setIsFavorite(favorites.some(fav => fav.id === mediaDetails.id));
     }, [mediaDetails]);
 
@@ -56,7 +61,7 @@ const MovieDetails = ({ fetchUrl, mediaType }: MediaProps) => {
 
     const toggleFavorite = () => {
       if (!mediaDetails) return;
-      const favorites: MediaType[] = JSON.parse(localStorage.getItem("favorites") || "[]");
+      const favorites: Media[] = JSON.parse(localStorage.getItem("favorites") || "[]");
 
       if (isFavorite) {
         const updated = favorites.filter(fav => fav.id !== mediaDetails.id);
@@ -75,29 +80,9 @@ const MovieDetails = ({ fetchUrl, mediaType }: MediaProps) => {
       }, 3000);
     };
 
-   
-    const getTitle = () => mediaDetails?.title || mediaDetails?.name || '';
-
-    const getReleaseYear = () => {
-      const date = mediaDetails?.release_date || mediaDetails?.first_air_date;
-      return date ? date.slice(0, 4) : '';
-    };
-
-    const getRuntime = () => {
-      if (mediaType === 'movie') {
-        return formatRuntime(mediaDetails?.runtime || 0);
-      } else {
-        const seasons = mediaDetails?.number_of_seasons || 0;
-        const episodes = mediaDetails?.number_of_episodes || 0;
-        return `${seasons} Season${seasons !== 1 ? 's' : ''} 
-        • 
-        ${episodes} Episode${episodes !== 1 ? 's' : ''}`;
-      }
-    };
-
     return (
         <div className="movie-details-container pb-5">
-            {mediaDetails ? (
+            {mediaDetails && (
                 <div className="movie-details position-relative">
                     {trailer && (
                         <div className="movie-details__video">
@@ -110,16 +95,16 @@ const MovieDetails = ({ fetchUrl, mediaType }: MediaProps) => {
                             ></iframe>
                         </div>
                     )}
-
+                    
                     <Button className="back-btn position-fixed top-0 m-3 bg-transparent border-none" onClick={() => navigate(-1)}>
                         <img src={BackArrow} alt="BackArrow" width={20} height={20} className=""/>
                     </Button>
               
                     <div className="movie-details__card">
-                        <h2 className="movie-details__card-title">{getTitle()}</h2>
-                        <p>{getReleaseYear()}</p>
-                        <p>{getRuntime()}</p>
-                        <img src={`https://image.tmdb.org/t/p/w500/${mediaDetails.poster_path}`} alt={getTitle()} />
+                        <h2 className="movie-details__card-title">{getTitle(mediaDetails.name || mediaDetails.title)}</h2>
+                        <p>{getReleaseYear(mediaDetails.first_air_date || mediaDetails.release_date)}</p>
+                        <p>{getRuntime(mediaType, mediaDetails)}</p>
+                        <img src={`https://image.tmdb.org/t/p/w500/${mediaDetails.poster_path}`} alt={getTitle(mediaDetails.name || mediaDetails.title)} />
                         <div className="movie-details__card-imdb pt-3"> 
                             <span>IMDB:</span> {mediaDetails.vote_average < 1 ? ( 
                                 "Not rated yet"
@@ -133,8 +118,6 @@ const MovieDetails = ({ fetchUrl, mediaType }: MediaProps) => {
                         </div>
                     </div>
                 </div>
-            ) : (
-                null
             )}
 
             <section ref={descriptionRef} className="movie-description pt-5">

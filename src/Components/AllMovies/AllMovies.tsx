@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Movie } from "../../types/movies";
 import './AllMovies.scss';
 import MovieCard from "../MovieCard/MovieCard";
+import { Media } from "../../types/Media";
 
 export default function AllMovies() {
   const apiKey = import.meta.env.VITE_API_KEY;
 
-  const [allMovies, setAllMovies] = useState<Movie[]>([]);
+  const [allMovies, setAllMovies] = useState<Media[]>([]);
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const [sort, setSort] = useState("popularity.desc");
