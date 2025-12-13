@@ -7,7 +7,7 @@ import { Media } from "../../types/Media";
 import { MediaProps } from "../../types/MediaProps";
 
 
-const MediaSlider = ({ fetchUrl, mediaType }: MediaProps) => {
+const MediaSlider = ({ mediaType }: MediaProps) => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const STOP_DURATION = 10000000;
   const START_DURATION = 60;
@@ -21,14 +21,14 @@ const MediaSlider = ({ fetchUrl, mediaType }: MediaProps) => {
   const xTranslation = useMotionValue(0);
     
   const fetchMedia = async () => {
-    const response = await fetch(`${fetchUrl}?api_key=${apiKey}`);
+    const response = await fetch(`https://api.themoviedb.org/3/trending/${mediaType}/day?api_key=${apiKey}`);
     const data = await response.json();
     setMediaItems(data.results);
   };
 
   useEffect(() => {
     fetchMedia();
-  }, [fetchUrl]);
+  }, [mediaType]);
 
   useEffect(() => {
     let controls;
