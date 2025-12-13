@@ -9,7 +9,6 @@ import { getReleaseYear, getRuntime, getTitle } from '../../Utils/mediaInformati
 
 const MovieDetails = (
   { 
-    fetchUrl, 
     mediaType 
   }: 
   MediaProps
@@ -17,8 +16,8 @@ const MovieDetails = (
     const apiKey = import.meta.env.VITE_API_KEY;
     const { id } = useParams();
 
-    const VIDEO_API = `${fetchUrl}/${id}/videos?api_key=${apiKey}`;
-    const DETAILS_API = `${fetchUrl}/${id}?api_key=${apiKey}`;
+    const VIDEO_API = `https://api.themoviedb.org/3/${mediaType}/${id}/videos?api_key=${apiKey}`;
+    const DETAILS_API = `https://api.themoviedb.org/3/${mediaType}/${id}?api_key=${apiKey}`;
 
     const [mediaDetails, setMediaDetails] = useState<Media| null>(null);
     const [mediaVideo, setMediaVideo] = useState<Media[]>([]);
@@ -37,7 +36,7 @@ const MovieDetails = (
     const fetchMoviesVideo = async () => {
         const response = await fetch(VIDEO_API);
         const data = await response.json();
-        setMediaVideo(data.results);
+        setMediaVideo(data.results || []);
     }
 
     useEffect(() => {
@@ -59,27 +58,29 @@ const MovieDetails = (
       descriptionRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const toggleFavorite = () => {
-      if (!mediaDetails) return;
-      const favorites: Media[] = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const toggleFavorite = () => {
+  if (!mediaDetails) return;
+  const favorites: Media[] = JSON.parse(localStorage.getItem("favorites") || "[]");
+  console.log(favorites)
 
-      if (isFavorite) {
-        const updated = favorites.filter(fav => fav.id !== mediaDetails.id);
-        localStorage.setItem("favorites", JSON.stringify(updated));
-        setIsFavorite(false);
-      } else {
-          favorites.push(mediaDetails);
-          localStorage.setItem("favorites", JSON.stringify(favorites));
-          setIsFavorite(true);
-        }
+  if (isFavorite) {
+    const updated = favorites.filter(fav => fav.id !== mediaDetails.id);
+    localStorage.setItem("favorites", JSON.stringify(updated));
+    setIsFavorite(false);
+  } else {
+      
+      const mediaWithType = { ...mediaDetails, media_type: mediaType };
+      favorites.push(mediaWithType);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      setIsFavorite(true);
+    }
 
-      setNotification(isFavorite ? "Removed From Favorites" : "Added To Favorites");
+  setNotification(isFavorite ? "Removed From Favorites" : "Added To Favorites");
 
-      setTimeout(() => {
-        setNotification(null);
-      }, 3000);
-    };
-
+  setTimeout(() => {
+    setNotification(null);
+  }, 3000);
+};
     return (
         <div className="movie-details-container pb-5">
             {mediaDetails && (
