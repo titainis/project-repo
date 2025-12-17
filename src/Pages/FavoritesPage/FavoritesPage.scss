@@ -13,6 +13,11 @@
         background-color: black;
     }
 
+    &-type {
+        font-size: 12px;
+        color: #49c8e7;
+    }
+
     &-title {
         color: white;
     }
@@ -53,6 +58,28 @@
 
     }
 
+}
+
+.filter {
+    &-select {
+        border-radius: 8px;
+        padding: 6px;
+        border-color: #49c8e7;
+        border-width: 2px;
+        background-color: transparent;
+        color: white;
+        transition: 0.3s ease-in;
+        cursor: pointer;
+
+        &:hover {
+            color: #49c8e7;
+        }
+        
+        option {
+            background-color: black;
+            text-align: left;
+        }
+    }
 }
 
 .favorites-page {

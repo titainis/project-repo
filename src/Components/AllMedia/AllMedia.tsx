@@ -1,41 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MediaCard from "../MediaCard/MediaCard";
 import { Link } from "react-router-dom";
-import { Media } from "../../types/Media";
 import { MediaProps } from "../../types/MediaProps";
+import Pagination from "../Pagination/Pagination";
 import './AllMedia.scss';
 
 const AllMedia = ({ mediaType }: MediaProps) => {
   const apiKey = import.meta.env.VITE_API_KEY;
 
-  const [allMedia, setAllMedia] = useState<Media[]>([]);
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const [sort, setSort] = useState("popularity.desc");
 
-  useEffect(() => {
-    const fetchAllMedia = async () => {
-      
-      const YearByType = year ? `&${mediaType === 'movie' ? 'year' : 'first_air_date_year'}=${year}` : "";
-      const genres = genre ? `&with_genres=${genre}` : "";
+  const fetchAllMedia = async (page: number) => {
+    const YearByType = year ? `&${mediaType === 'movie' ? 'year' : 'first_air_date_year'}=${year}` : "";
+    const genres = genre ? `&with_genres=${genre}` : "";
 
-      const url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${apiKey}&sort_by=
-      ${sort}${genres}${YearByType}`;
+    const url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${apiKey}&sort_by=${sort}${genres}${YearByType}&page=${page}`;
 
-        const response = await fetch(url);
-        const data = await response.json();
-       
-      setAllMedia(data.results);
+    const response = await fetch(url);
+    const data = await response.json();
+   
+    return {
+      results: data.results,
+      total_pages: data.total_pages
     };
-
-    fetchAllMedia();
-  }, [genre, year, sort, mediaType]);
+  };
 
   return (
     <div className="media-list-component w-100 pb-5">
       <div className="filters d-flex gap-3 mb-4 justify-content-center flex-wrap">
         <select onChange={(e) => setGenre(e.target.value)} className="form-select w-auto">
-          <option value="" disabled>Genres</option>
+          <option value="">All Genres</option>
           <option value="28">Action</option>
           <option value="35">Comedy</option>
           <option value="18">Drama</option>
@@ -46,46 +42,42 @@ const AllMedia = ({ mediaType }: MediaProps) => {
           {mediaType === 'tv' && <option value="16">Animation</option>}
         </select>
 
-        <input type="number" 
+        <input 
+          type="number" 
           placeholder="Year" 
           value={year} 
           onChange={(e) => { 
             if(e.target.value.length <= 4) setYear(e.target.value) 
-            }} 
+          }} 
           onBlur={(e) => { 
             const value = e.target.value; 
             if (value && (parseInt(value) < 1900 || parseInt(value) > 2025)) { 
               setYear(''); 
-              } 
-            }} 
-            className="filter-input form-control" 
-            min="1900" 
-            max="2025" 
-          />
+            } 
+          }} 
+          className="filter-input form-control" 
+          min="1900" 
+          max="2025" 
+        />
 
         <select onChange={(e) => setSort(e.target.value)} className="form-select w-auto">
           <option value="popularity.desc">Most Popular</option>
           <option value="vote_average.desc">Highest Rated</option>
-          <option value='release_date.desc'>
-            Newest
-          </option>
+          <option value='release_date.desc'>Newest</option>
         </select>
       </div>
 
-      <div className="d-flex flex-wrap justify-content-center gap-5 pt-3 pb-5">
-        {allMedia.length === 0 ? (
-          <p>No results found</p>
-        ) : (
-          allMedia.map((media) => (
-            <Link 
-              key={media.id} 
-              to={mediaType === 'movie' ? `/movies/${media.id}` : `/tv-series/${media.id}`}
-            >
-              <MediaCard media={media} />
-            </Link>
-          ))
+      <Pagination 
+        key={`${genre}-${year}-${sort}-${mediaType}`}
+        fetchFunction={fetchAllMedia}
+        renderItem={(media) => (
+          <Link 
+            to={mediaType === 'movie' ? `/movies/${media.id}` : `/tv-series/${media.id}`}
+          >
+            <MediaCard media={media} />
+          </Link>
         )}
-      </div>
+      />
     </div>
   );
 }
