@@ -49,7 +49,7 @@ const SearchBar = ({ isVisible}: {isVisible: boolean}) => {
             setQuery(e.target.value);
           }} 
         />
-        <Button className="search__btn">
+        <Button className="search__btn" onClick={() => SearchAPI(query)}>
           <img className="search__icon"
             src={SearchIcon}
             alt="Search" 

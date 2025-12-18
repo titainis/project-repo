@@ -18,7 +18,7 @@ export const getPageNumbers = (page: number, allPages: number) => {
         pages.push("...");
     }
 
-    const nextSectionEnd = Math.ceil(page / 9) * 10;
+    const nextSectionEnd = Math.ceil(page / 7) * 8;
     
     if (nextSectionEnd > page && nextSectionEnd <= allPages) {
         pages.push(nextSectionEnd);
