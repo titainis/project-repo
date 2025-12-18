@@ -7,6 +7,7 @@ import { Media } from "../../types/Media";
 
 const FavoritesPage = () => {
     const [favorites, setFavorites] = useState<Media[]>([])
+    const [filterType, setFilterType] = useState<string>("")
 
     useEffect(() => {
       const savedFavorites: Media[] = JSON.parse(localStorage.getItem("favorites") || "[]");
@@ -19,13 +20,25 @@ const FavoritesPage = () => {
     localStorage.setItem("favorites", JSON.stringify(updated));
   };
 
+  const filteredFavorites = filterType ? 
+    favorites.filter(media => media.media_type === filterType) : 
+    favorites;
+
      return (
     <>
       <Header />
       <div className="container favorites-page">
-        <h2 className="text-center pt-3 mb-5">Your Favorite Movies</h2>
+        <h2 className="text-center pt-3 mb-4">Your Favorite Movies And TV Series</h2>
 
-        {favorites.length === 0 ? (
+        <div className="filter d-flex justify-content-center pb-4">
+          <select className="filter-select" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+            <option value="" selected >All Types</option>
+            <option value="movie">Movies</option>
+            <option value="tv">TV Series</option>
+          </select>
+        </div>
+
+        {filteredFavorites.length === 0 ? (
           <div className="text-center fs-5">
             <p>No favorites yet</p>
             <Link to='/movies' className="text-decoration-none text-white">
@@ -36,7 +49,7 @@ const FavoritesPage = () => {
             </Link>
           </div> ) :
             (<div className="row">
-              {favorites.map((media) => (
+              {filteredFavorites.map((media) => (
               <div key={media.id} className="col-md-3 mb-4">
                 <div className="card favorites-page__card h-100">
                   <img
@@ -45,7 +58,11 @@ const FavoritesPage = () => {
                       alt={media.title || media.name}
                   />
                   <div className="card-body d-flex flex-column">
+                    <div className="d-flex gap-3">
                       <h5 className="card-title">{media.title || media.name}</h5>
+                      <p className="card-type d-flex ">{media.media_type.toUpperCase()}</p>
+                      </div>
+                      
                       <p className="card-text">{media.release_date?.slice(0, 4) || media.first_air_date.slice(0, 4)}</p>
 
                       <div className="card-buttons d-flex flex-column mt-auto"> 
